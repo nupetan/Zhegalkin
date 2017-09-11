@@ -1,61 +1,61 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-/***ƒvƒƒgƒ^ƒCƒvéŒ¾***/
-int num(int num,int mask,int cnt);
+/***ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€***/
+int shift(int num,int mask,int cnt);
 void bitprint(int cnt);
 void main(){
-        //int outputs =295040,i;
-        char results[128];
-        int outputs, i;
-        int mask = 0x7FFFFFFF;
-/*ƒŠ[ƒhEƒ}ƒ‰[•W€Œ`‚É•ÏŠ·‚µ‚½‚¢^—’l•\‚Ìo—Í•”‚ğ
- * ‰º•”‚Ù‚Çd‚İ‚ª‚ ‚é‚Æ‘¨‚¦‚Ä10i”‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢*/
-        printf("\x1b[36minput the results of truth table you would like to make it simply with EX-ORing known as an Algebraic normal form.\x1b[39m\n");
-/*ƒL[ƒ{[ƒh‚©‚ç’l‚ğ“ü—Í‚µ‚ÄA”’l‚É•ÏŠ·‚·‚éˆ—*/
-        outputs=atoi(gets(results));
-/*“ü—Í‚³‚ê‚½”’l‚ğ‹L‰¯‚·‚é‚Ì‚É•K—v‚Èƒrƒbƒg”‚ğŒvZ‚Í
- * log2(”’l)‚¾‚ªA’ê‚ªƒlƒCƒsƒA”‚©10‚©•s–¾‚È‚Ì‚Å’ê‚Ì•ÏŠ·‚ğ—p‚¢‚½
- *
- * ’ê‚Ì•ÏŠ·Flog X(Y)=log Z(X)/log(Y)*/
-        double length = (double)outputs;
-        length = log(length)/log(2.0);
-/*ƒrƒbƒgƒ}ƒXƒN‚ğ•K—v‚ÈŒ…”‚Éİ’è‚·‚é*/
-        for(i=0;i<30-(int)length+0.9;i++)
-        mask>>=1;
-        //printf("debug %.5f\n",length);
-        //printf("debug hex:%X\n",mask);
+	//int outputs =295040,i;
+	char results[128];
+	int outputs,i;
+	int mask=0x7FFFFFFF;
+/*ãƒªãƒ¼ãƒ‰ãƒ»ãƒãƒ©ãƒ¼æ¨™æº–å½¢ã«å¤‰æ›ã—ãŸã„çœŸç†å€¤è¡¨ã®å‡ºåŠ›éƒ¨ã‚’
+ * ä¸‹éƒ¨ã»ã©é‡ã¿ãŒã‚ã‚‹ã¨æ‰ãˆã¦10é€²æ•°ã§å…¥åŠ›ã—ã¦ãã ã•ã„*/
+	printf("\x1b[36minput the results of truth table you would like to make it simply with EX-ORing known as an Algebraic normal form.\x1b[39m\n");
+/*ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‹ã‚‰å€¤ã‚’å…¥åŠ›ã—ã¦ã€æ•°å€¤ã«å¤‰æ›ã™ã‚‹å‡¦ç†*/
+	outputs=atoi(fgets(results,sizeof(results),stdin));
+/*å…¥åŠ›ã•ã‚ŒãŸæ•°å€¤ã‚’è¨˜æ†¶ã™ã‚‹ã®ã«å¿…è¦ãªãƒ“ãƒƒãƒˆæ•°ã‚’è¨ˆç®—ã¯
+ * log2(æ•°å€¤)ã ãŒã€åº•ãŒãƒã‚¤ãƒ”ã‚¢æ•°ã‹10ã‹ä¸æ˜ãªã®ã§åº•ã®å¤‰æ›ã‚’ç”¨ã„ãŸ
+ * 
+ * åº•ã®å¤‰æ›ï¼šlog X(Y)=log Z(Y)/log Z(X)*/
+	double length=(double)outputs;
+	length=log(length)/log(2.0);
+/*ãƒ“ãƒƒãƒˆãƒã‚¹ã‚¯ã‚’å¿…è¦ãªæ¡æ•°ã«è¨­å®šã™ã‚‹*/
+	for(i=0;i<30-(int)length+0.9;i++)
+	mask>>=1;
+	//printf("debug %.5f\n",length);
+	//printf("debug hex:%X\n",mask);
 
-        shift(outputs,mask,0);
+	shift(outputs,mask,0);
 }
 
 int shift(int num,int mask,int cnt){
-        if(num&1){
-                puts("Zhegalkin poly:");
-                bitprint(cnt);
-        }
-        cnt++;
+	if(num&1){
+		puts("Zhegalkin poly:");
+		bitprint(cnt);
+	}
+	cnt++;
 
-/*Zhegalkin Polynomial‚ğ’T‚·*/
-        num = num ^ num >> 1;
-        num = num & mask;
-        mask = mask >> 1;
+/*Zhegalkin Polynomialã‚’æ¢ã™*/
+	num=num^num >> 1;
+	num=num&mask;
+	mask=mask>>1;
 /**/
-        //printf("out = %d\n",num);
-/*0‚É‚È‚é‚Ü‚ÅÄ‹A‚·‚é*/
-        if(num>0)
-                shift(num,mask,cnt);
-        return num;
+	//printf("out = %d\n",num);
+/*0ã«ãªã‚‹ã¾ã§å†å¸°ã™ã‚‹*/
+	if(num>0)
+		shift(num,mask,cnt);
+	return 0;
 }
 
 void bitprint(int cnt){
-/*2i”‚É•ÏŠ·‚µ‚Ä•\¦*/
-        unsigned int bit = (1 << (sizeof(int)) * 8 - 1);
-        for(;bit!=0;bit>>=1){
-        if(cnt&bit)
-                putchar('1');
-        else
-                putchar('0');
-        }
-        puts("");
+/*2é€²æ•°ã«å¤‰æ›ã—ã¦è¡¨ç¤º*/
+	unsigned int bit=(1<<(sizeof(int))*8-1);
+	for(;bit!=0;bit>>=1){
+	if(cnt&bit)
+		putchar('1');
+	else
+		putchar('0');
+	}
+	puts("");
 }
